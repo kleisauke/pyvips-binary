@@ -1,0 +1,3 @@
+[submodule "pyvips"]
+	path = pyvips
+	url = https://github.com/libvips/pyvips.git

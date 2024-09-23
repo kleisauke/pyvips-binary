@@ -1,0 +1,106 @@
+[build-system]
+requires = [
+    # First version of setuptools to support pyproject.toml configuration
+    "setuptools>=61.0.0",
+    "wheel",
+    # Must be kept in sync with `project.dependencies`
+    "cffi>=1.0.0",
+    "pkgconfig>=1.5",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyvips-binary"
+# Must be kept in sync with `scripts/download-vips.py`
+version = "8.15.3"
+authors = [
+    {name = "Kleis Auke Wolthuizen", email = "info@kleisauke.nl"},
+]
+description = "Binary distribution of libvips and dependencies for use with pyvips"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = [
+    # Must be kept in sync with `build-system.requires`
+    "cffi>=1.0.0",
+]
+
+[project.urls]
+changelog ="https://github.com/kleisauke/pyvips-binary/blob/main/CHANGELOG.md"
+funding = "https://opencollective.com/libvips"
+homepage = "https://github.com/kleisauke/pyvips-binary"
+issues = "https://github.com/kleisauke/pyvips-binary/issues"
+source = "https://github.com/kleisauke/pyvips-binary"
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+exclude = [
+    "pyvips*",
+    "scripts*",
+]
+
+[tool.cibuildwheel]
+# Only build CPython 3.7, because we have portable abi3 wheels
+# Apple Silicon is only available on 3.8 and later
+build = [
+    "cp37-*",
+    "cp38-macosx_arm64",
+]
+build-frontend = "build"
+before-build = "bash {package}/scripts/cibw_before_build.sh"
+test-command = "python -c \"import _libvips; assert _libvips.lib.vips_version(0) == 8\""
+environment-pass = ["RUNNER_OS"]
+
+[tool.cibuildwheel.environment]
+PKG_CONFIG_PATH = "./tmp/lib/pkgconfig"
+LD_LIBRARY_PATH = "$(pwd)/tmp/lib"
+DYLD_LIBRARY_PATH = "$(pwd)/tmp/lib"
+MACOSX_DEPLOYMENT_TARGET = "10.13"
+
+[tool.cibuildwheel.linux]
+archs = "x86_64 aarch64"
+manylinux-x86_64-image = "manylinux_2_28"
+manylinux-aarch64-image = "manylinux_2_28"
+
+[[tool.cibuildwheel.overrides]]
+select = "*-musllinux*"
+# Exclude a couple of system libraries from grafting into the resulting wheel
+repair-wheel-command = """\
+auditwheel repair -w {dest_dir} {wheel} \
+--exclude libc.so --exclude libstdc++.so.6 --exclude libgcc_s.so.1\
+"""
+
+[tool.cibuildwheel.macos]
+archs = "x86_64 arm64"
+# https://github.com/pypa/cibuildwheel/pull/1169
+test-skip = "*-macosx_arm64"
+
+[tool.cibuildwheel.windows]
+archs = "AMD64 x86"
+# Use delvewheel on Windows
+before-all = "pip install delvewheel"
+repair-wheel-command = """\
+delvewheel repair -w {dest_dir} {wheel} \
+--add-path ./tmp/lib --no-diagnostic\
+"""
