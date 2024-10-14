@@ -11,7 +11,7 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError
 
 # Must be kept in sync with `../pyproject.toml`
-VIPS_VERSION = '8.15.3'
+VIPS_VERSION = '8.16.0-rc1'
 BASE_LOC = (
     'https://github.com/kleisauke/libvips-packaging/releases'
 )
@@ -93,18 +93,15 @@ def download_vips(target, plat):
                ('Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 ; '
                 '(KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3')}
     suffix = None
+    typ = 'tar.gz'
     if osname == "linux":
         suffix = get_linux(arch)
-        typ = 'tar.gz'
     elif osname == "musllinux":
         suffix = get_musllinux(arch)
-        typ = 'tar.gz'
     elif osname == 'macosx':
         suffix = get_macosx(arch)
-        typ = 'tar.gz'
     elif osname == 'win':
         suffix = get_win32(arch)
-        typ = 'tar.gz'
 
     if not suffix:
         return None

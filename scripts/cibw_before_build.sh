@@ -11,9 +11,6 @@ if [[ $RUNNER_OS == "Linux" ]]; then
 elif [[ $RUNNER_OS == "Windows" ]]; then
   # MSVC convention: import library is called "libvips.lib"
   linkname="-llibvips"
-  # GLib is compiled as a shared library in the "-static-ffi" variant
-  # TODO: Remove after we distribute the "-static" variant in the libvips-packaging repo
-  linkname+=" -llibglib-2.0 -llibgobject-2.0"
 elif [[ $RUNNER_OS == "macOS" ]]; then
   # -l:<LIB> syntax is unavailable with ld on macOS
   ln -sf libvips.42.dylib $basedir/lib/libvips.dylib
@@ -30,7 +27,7 @@ includedir=\${prefix}/include
 
 Name: vips
 Description: Image processing library
-Version: 8.15.3
+Version: 8.16.0
 Requires:
 Libs: -L\${libdir} ${linkname}
 Cflags: -I\${includedir} -I\${includedir}/glib-2.0 -I\${libdir}/glib-2.0/include
