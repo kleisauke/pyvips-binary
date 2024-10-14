@@ -34,7 +34,7 @@ jobs:
         run: Add-Content $env:GITHUB_PATH "$env:RUNNER_TEMP\msys64\ucrt64\bin"
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21.1
+        uses: pypa/cibuildwheel@v2.21.3
 
       - uses: actions/upload-artifact@v4
         with:
