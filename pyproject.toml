@@ -68,6 +68,8 @@ build = [
     "cp37-*",
     "cp38-macosx_arm64",
 ]
+# https://github.com/lovell/sharp-libvips/issues/59
+skip = "cp37-musllinux_armv7l"
 build-frontend = "build"
 before-build = "bash {package}/scripts/cibw_before_build.sh"
 test-command = "python -c \"import _libvips; assert _libvips.lib.vips_version(0) == 8\""
@@ -80,9 +82,11 @@ DYLD_LIBRARY_PATH = "$(pwd)/tmp/lib"
 MACOSX_DEPLOYMENT_TARGET = "10.13"
 
 [tool.cibuildwheel.linux]
-archs = "x86_64 aarch64"
+archs = "x86_64 aarch64 armv7l"
 manylinux-x86_64-image = "manylinux_2_28"
 manylinux-aarch64-image = "manylinux_2_28"
+# https://github.com/pypa/cibuildwheel/pull/2269
+manylinux-armv7l-image = "quay.io/pypa/manylinux_2_31_armv7l:latest"
 
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux*"

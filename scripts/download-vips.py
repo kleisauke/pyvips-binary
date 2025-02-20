@@ -17,11 +17,13 @@ BASE_LOC = (
 )
 SUPPORTED_PLATFORMS = [
     'linux-aarch64',
+    'linux-armv7l',
     'linux-x86_64',
     'musllinux-aarch64',
     'musllinux-x86_64',
     'win-32',
     'win-amd64',
+    # https://github.com/lovell/sharp-libvips/issues/238
     # 'win-arm64',
     'macosx-arm64',
     'macosx-x86_64',
@@ -31,6 +33,7 @@ ARCH_REMAP = {
     'aarch64': 'arm64',
     'amd64': 'x64',
     'arm64': 'arm64',
+    'armv7l': 'arm',
     'x86_64': 'x64',
 }
 
