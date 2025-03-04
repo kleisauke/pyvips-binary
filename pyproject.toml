@@ -85,8 +85,6 @@ MACOSX_DEPLOYMENT_TARGET = "10.13"
 archs = "x86_64 aarch64 armv7l"
 manylinux-x86_64-image = "manylinux_2_28"
 manylinux-aarch64-image = "manylinux_2_28"
-# https://github.com/pypa/cibuildwheel/pull/2269
-manylinux-armv7l-image = "quay.io/pypa/manylinux_2_31_armv7l:latest"
 
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux*"
