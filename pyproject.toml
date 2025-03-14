@@ -12,7 +12,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pyvips-binary"
 # Must be kept in sync with `scripts/download-vips.py`
-version = "8.16.0"
+version = "8.16.1"
 authors = [
     {name = "Kleis Auke Wolthuizen", email = "info@kleisauke.nl"},
 ]
@@ -79,7 +79,7 @@ environment-pass = ["RUNNER_OS"]
 PKG_CONFIG_PATH = "./tmp/lib/pkgconfig"
 LD_LIBRARY_PATH = "$(pwd)/tmp/lib"
 DYLD_LIBRARY_PATH = "$(pwd)/tmp/lib"
-MACOSX_DEPLOYMENT_TARGET = "10.13"
+MACOSX_DEPLOYMENT_TARGET = "10.15"
 
 [tool.cibuildwheel.linux]
 archs = "x86_64 aarch64 armv7l"
