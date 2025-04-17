@@ -23,8 +23,7 @@ SUPPORTED_PLATFORMS = [
     'musllinux-x86_64',
     'win-32',
     'win-amd64',
-    # https://github.com/lovell/sharp-libvips/issues/238
-    # 'win-arm64',
+    'win-arm64',
     'macosx-arm64',
     'macosx-x86_64',
 ]

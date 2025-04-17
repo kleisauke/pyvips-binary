@@ -63,9 +63,11 @@ exclude = [
 [tool.cibuildwheel]
 # Only build CPython 3.7, because we have portable abi3 wheels
 # Apple Silicon is only available on 3.8 and later
+# Windows ARM64 is only available on 3.9 and later
 build = [
     "cp37-*",
     "cp38-macosx_arm64",
+    "cp39-win_arm64",
 ]
 # https://github.com/lovell/sharp-libvips/issues/59
 skip = "cp37-musllinux_armv7l"
@@ -99,7 +101,7 @@ archs = "x86_64 arm64"
 test-skip = "*-macosx_arm64"
 
 [tool.cibuildwheel.windows]
-archs = "AMD64 x86"
+archs = "AMD64 x86 ARM64"
 # Use delvewheel on Windows
 before-all = "pip install delvewheel"
 repair-wheel-command = """\

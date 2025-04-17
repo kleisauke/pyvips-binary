@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm, windows-2022, macos-13]
+        os: [ubuntu-24.04, ubuntu-24.04-arm, windows-2022, windows-11-arm, macos-13]
 
     steps:
       - uses: actions/checkout@v4
@@ -23,19 +23,20 @@ jobs:
         uses: msys2/setup-msys2@v2
         id: msys2
         with:
-          msystem: ucrt64
-          install: mingw-w64-ucrt-x86_64-pkgconf
+          msystem: ${{ runner.arch == 'X64' && 'clang64' || 'clangarm64' }}
+          install: mingw-w64-clang-${{ runner.arch == 'X64' && 'x86_64' || 'aarch64' }}-pkgconf
 
       - name: Put pkgconf on PATH
         if: runner.os == 'Windows'
-        run: Add-Content $env:GITHUB_PATH "${{ steps.msys2.outputs.msys2-location }}\ucrt64\bin"
+        run: Add-Content $env:GITHUB_PATH "${{ steps.msys2.outputs.msys2-location }}\$env:MSYSTEM\bin"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.23.2
         env:
-          # Configure cibuildwheel on Linux to split the architectures
-          # between the x86_64 and Arm64 runners.
+          # Configure cibuildwheel on Linux and Windows to split the
+          # architectures between the x86_64 and Arm64 runners.
           CIBW_ARCHS_LINUX: ${{ runner.arch == 'X64' && 'x86_64' || 'aarch64 armv7l' }}
+          CIBW_ARCHS_WINDOWS: ${{ runner.arch == 'X64' && 'AMD64 x86' || 'ARM64' }}
 
       - uses: actions/upload-artifact@v4
         with:
