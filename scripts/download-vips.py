@@ -11,7 +11,7 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError
 
 # Must be kept in sync with `../pyproject.toml`
-VIPS_VERSION = '8.16.1'
+VIPS_VERSION = '8.17.0'
 BASE_LOC = (
     'https://github.com/kleisauke/libvips-packaging/releases'
 )
@@ -109,7 +109,7 @@ def download_vips(target, plat):
         return None
 
     filename = (
-        f'{BASE_LOC}/download/v{VIPS_VERSION}/'
+        f'{BASE_LOC}/download/v{VIPS_VERSION}-build2/'
         f'libvips-{VIPS_VERSION}-{suffix}'
     )
     print(f'Attempting to download {filename}', file=sys.stderr)
