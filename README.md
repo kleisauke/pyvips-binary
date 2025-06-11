@@ -1,6 +1,6 @@
 # pyvips-binary
 
-[![Build status](https://github.com/kleisauke/pyvips-binary/actions/workflows/build-release.yml/badge.svg)](https://github.com/kleisauke/pyvips-binary/actions)
+[![CI status](https://github.com/kleisauke/pyvips-binary/actions/workflows/ci.yml/badge.svg)](https://github.com/kleisauke/pyvips-binary/actions)
 [![PyPI package](https://img.shields.io/pypi/v/pyvips-binary?label=PyPI%20package)](https://pypi.org/project/pyvips-binary/)
 
 This binary package is an optional component of [pyvips](
