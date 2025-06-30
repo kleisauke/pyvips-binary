@@ -65,7 +65,6 @@ exclude = [
 build = "cp313-*"
 # https://github.com/lovell/sharp-libvips/issues/59
 skip = "cp313-musllinux_armv7l"
-build-frontend = "build"
 before-build = "bash {package}/scripts/cibw_before_build.sh"
 test-command = "python -c \"import _libvips; assert _libvips.lib.vips_version(0) == 8\""
 environment-pass = ["RUNNER_OS"]
@@ -78,9 +77,6 @@ MACOSX_DEPLOYMENT_TARGET = "10.15"
 
 [tool.cibuildwheel.linux]
 archs = "x86_64 aarch64 armv7l"
-# https://github.com/pypa/cibuildwheel/pull/2330
-manylinux-x86_64-image = "manylinux_2_28"
-manylinux-aarch64-image = "manylinux_2_28"
 # Use abi3audit to catch issues with Limited API wheels
 repair-wheel-command = [
   "auditwheel repair -w {dest_dir} {wheel}",
