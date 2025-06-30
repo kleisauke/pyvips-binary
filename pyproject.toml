@@ -87,25 +87,34 @@ archs = "x86_64 aarch64 armv7l"
 # https://github.com/pypa/cibuildwheel/pull/2330
 manylinux-x86_64-image = "manylinux_2_28"
 manylinux-aarch64-image = "manylinux_2_28"
+# Use abi3audit to catch issues with Limited API wheels
+repair-wheel-command = [
+  "auditwheel repair -w {dest_dir} {wheel}",
+  "pipx run abi3audit --strict --report {wheel}",
+]
 
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux*"
-# Exclude a couple of system libraries from grafting into the resulting wheel
-repair-wheel-command = """\
-auditwheel repair -w {dest_dir} {wheel} \
---exclude libc.so --exclude libstdc++.so.6 --exclude libgcc_s.so.1\
-"""
+repair-wheel-command = [
+  # Exclude a couple of system libraries from grafting into the resulting wheel
+  "auditwheel repair -w {dest_dir} {wheel} --exclude libc.so --exclude libstdc++.so.6 --exclude libgcc_s.so.1",
+  "pipx run abi3audit --strict --report {wheel}",
+]
 
 [tool.cibuildwheel.macos]
 archs = "x86_64 arm64"
 # https://github.com/pypa/cibuildwheel/pull/1169
 test-skip = "*-macosx_arm64"
+repair-wheel-command = [
+  "delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}",
+  "pipx run abi3audit --strict --report {wheel}",
+]
 
 [tool.cibuildwheel.windows]
 archs = "AMD64 x86 ARM64"
 # Use delvewheel on Windows
 before-all = "pip install delvewheel"
-repair-wheel-command = """\
-delvewheel repair -w {dest_dir} {wheel} \
---add-path ./tmp/lib --no-diagnostic\
-"""
+repair-wheel-command = [
+  "delvewheel repair -w {dest_dir} {wheel} --add-path ./tmp/lib --no-diagnostic",
+  "pipx run abi3audit --strict --report {wheel}",
+]
