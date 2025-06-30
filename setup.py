@@ -18,5 +18,6 @@ else:
 
 setup(
     cffi_modules=cffi_modules,
-    options={'bdist_wheel': {'py_limited_api': f'cp{sys.version_info.major}{sys.version_info.minor}'}},
+    # Must be kept in sync with `requires-python` in pyproject.toml
+    options={'bdist_wheel': {'py_limited_api': f'cp37'}},
 )
