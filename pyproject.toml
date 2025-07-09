@@ -10,14 +10,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyvips-binary"
-# Must be kept in sync with `scripts/download-vips.py`
-version = "8.17.0"
+# Must be kept in sync with scripts/download-vips.py
+version = "8.17.1"
 authors = [
     {name = "Kleis Auke Wolthuizen", email = "info@kleisauke.nl"},
 ]
 description = "Binary distribution of libvips and dependencies for use with pyvips"
 readme = "README.md"
 license = {text = "LGPL-3.0-or-later"}
+# Must be kept in sync with setup.py
 requires-python = ">=3.7"
 classifiers = [
     "Development Status :: 5 - Production/Stable",

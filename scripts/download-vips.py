@@ -10,8 +10,8 @@ from tempfile import mkstemp
 from urllib.request import urlopen, Request
 from urllib.error import HTTPError
 
-# Must be kept in sync with `../pyproject.toml`
-VIPS_VERSION = '8.17.0'
+# Must be kept in sync with pyproject.toml
+VIPS_VERSION = '8.17.1'
 BASE_LOC = (
     'https://github.com/kleisauke/libvips-packaging/releases'
 )
@@ -109,7 +109,7 @@ def download_vips(target, plat):
         return None
 
     filename = (
-        f'{BASE_LOC}/download/v{VIPS_VERSION}-build2/'
+        f'{BASE_LOC}/download/v{VIPS_VERSION}/'
         f'libvips-{VIPS_VERSION}-{suffix}'
     )
     print(f'Attempting to download {filename}', file=sys.stderr)
