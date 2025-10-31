@@ -11,7 +11,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pyvips-binary"
 # Must be kept in sync with scripts/download-vips.py
-version = "8.17.2"
+version = "8.17.3"
 authors = [
     {name = "Kleis Auke Wolthuizen", email = "info@kleisauke.nl"},
 ]
