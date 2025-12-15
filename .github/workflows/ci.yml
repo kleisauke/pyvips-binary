@@ -31,7 +31,7 @@ jobs:
         run: Add-Content $env:GITHUB_PATH "${{ steps.msys2.outputs.msys2-location }}\$env:MSYSTEM\bin"
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.2.1
+        uses: pypa/cibuildwheel@v3.3.0
         env:
           # Configure cibuildwheel on Linux and Windows to split the
           # architectures between the x86_64 and Arm64 runners.
