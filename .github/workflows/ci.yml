@@ -38,7 +38,7 @@ jobs:
           CIBW_ARCHS_LINUX: ${{ runner.arch == 'X64' && 'x86_64' || 'aarch64 armv7l' }}
           CIBW_ARCHS_WINDOWS: ${{ runner.arch == 'X64' && 'AMD64 x86' || 'ARM64' }}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: cibw-wheels-${{ matrix.os }}
           path: wheelhouse/*.whl
@@ -55,7 +55,7 @@ jobs:
       - name: Build sdist
         run: pipx run build --sdist
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: cibw-sdist
           path: dist/*.tar.gz
