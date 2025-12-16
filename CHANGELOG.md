@@ -4,6 +4,17 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.18.0-rc2] - 2025-12-16
+### Note
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://www.libvips.org/2025/12/04/What's-new-in-8.18.html
+
+### Added
+- Include libultrahdr as dependency ([lovell/sharp-libvips#307](https://github.com/lovell/sharp-libvips/pull/307)).
+
+### Changed
+- Switch from spng to libpng ([lovell/sharp-libvips#300](https://github.com/lovell/sharp-libvips/pull/300)).
+
 ## [8.17.3] - 2025-10-31
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
@@ -54,6 +65,7 @@ https://github.com/libvips/libvips/releases/tag/v8.15.3
 ### Added
 - Initial release.
 
+[8.18.0-rc2]: https://github.com/kleisauke/pyvips-binary/compare/v8.17.3...v8.18.0-rc2
 [8.17.3]: https://github.com/kleisauke/pyvips-binary/compare/v8.17.2...v8.17.3
 [8.17.2]: https://github.com/kleisauke/pyvips-binary/compare/v8.17.1...v8.17.2
 [8.17.1]: https://github.com/kleisauke/pyvips-binary/compare/v8.17.0...v8.17.1
