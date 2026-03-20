@@ -4,6 +4,15 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.18.1] - 2026-03-20
+### Note
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://github.com/libvips/libvips/releases/tag/v8.18.1
+
+### Changed
+- Bump the minimum required glibc version to 2.28 ([lovell/sharp-libvips#317](https://github.com/lovell/sharp-libvips/pull/317)).
+- Bump the minimum required musl version to 1.2.5 ([lovell/sharp-libvips#317](https://github.com/lovell/sharp-libvips/pull/317)).
+
 ## [8.18.0] - 2026-01-01
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
@@ -65,6 +74,7 @@ https://github.com/libvips/libvips/releases/tag/v8.15.3
 ### Added
 - Initial release.
 
+[8.18.1]: https://github.com/kleisauke/pyvips-binary/compare/v8.18.0...v8.18.1
 [8.18.0]: https://github.com/kleisauke/pyvips-binary/compare/v8.17.3...v8.18.0
 [8.17.3]: https://github.com/kleisauke/pyvips-binary/compare/v8.17.2...v8.17.3
 [8.17.2]: https://github.com/kleisauke/pyvips-binary/compare/v8.17.1...v8.17.2
