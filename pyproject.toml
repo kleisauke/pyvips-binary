@@ -100,7 +100,11 @@ MACOSX_DEPLOYMENT_TARGET = "10.15"
 [tool.cibuildwheel.windows]
 archs = "AMD64 x86 ARM64"
 # Avoid writing diagnostic information to DELVEWHEEL metadata file
-repair-wheel-command = "delvewheel repair -w {dest_dir} -v {wheel} --no-diagnostic"
+# Exclude vcruntime140.dll from grafting into the resulting wheel
+repair-wheel-command = """\
+delvewheel repair -w {dest_dir} -v {wheel} --no-diagnostic \
+--exclude vcruntime140.dll\
+"""
 
 [tool.cibuildwheel.windows.environment]
 PATH = "./tmp/lib;$PATH"
