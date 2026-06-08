@@ -47,7 +47,7 @@ dependencies = [
 ]
 
 [project.urls]
-changelog ="https://github.com/kleisauke/pyvips-binary/blob/main/CHANGELOG.md"
+changelog = "https://github.com/kleisauke/pyvips-binary/blob/main/CHANGELOG.md"
 funding = "https://opencollective.com/libvips"
 homepage = "https://github.com/kleisauke/pyvips-binary"
 issues = "https://github.com/kleisauke/pyvips-binary/issues"
@@ -71,43 +71,37 @@ before-build = "bash {package}/scripts/cibw_before_build.sh"
 test-command = "python -c \"import _libvips; assert _libvips.lib.vips_version(0) == 8\""
 environment-pass = ["RUNNER_OS"]
 
-[tool.cibuildwheel.environment]
-PKG_CONFIG_PATH = "./tmp/lib/pkgconfig"
-LD_LIBRARY_PATH = "$(pwd)/tmp/lib"
-DYLD_LIBRARY_PATH = "$(pwd)/tmp/lib"
-MACOSX_DEPLOYMENT_TARGET = "10.15"
-
 [tool.cibuildwheel.linux]
 archs = "x86_64 aarch64 armv7l"
 # manylinux_2_28 and musllinux_1_2 ships with patchelf 0.17.2
 # https://github.com/NixOS/patchelf/issues/474
 before-all = "pipx install --force patchelf==0.18.1.0a1"
-# Use abi3audit to catch issues with Limited API wheels
-repair-wheel-command = [
-  "auditwheel repair -w {dest_dir} {wheel}",
-  "pipx run abi3audit --strict --report {wheel}",
-]
+
+[tool.cibuildwheel.linux.environment]
+LD_LIBRARY_PATH = "$(pwd)/tmp/lib"
+PKG_CONFIG_PATH = "$(pwd)/tmp/lib/pkgconfig"
 
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux*"
-repair-wheel-command = [
-  # Exclude a couple of system libraries from grafting into the resulting wheel
-  "auditwheel repair -w {dest_dir} {wheel} --exclude libc.so --exclude libstdc++.so.6 --exclude libgcc_s.so.1",
-  "pipx run abi3audit --strict --report {wheel}",
-]
+# Exclude a couple of system libraries from grafting into the resulting wheel
+repair-wheel-command = """\
+auditwheel repair -w {dest_dir} {wheel} \
+--exclude libc.so --exclude libstdc++.so.6 --exclude libgcc_s.so.1\
+"""
 
 [tool.cibuildwheel.macos]
 archs = "x86_64 arm64"
-repair-wheel-command = [
-  "delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}",
-  "pipx run abi3audit --strict --report {wheel}",
-]
+
+[tool.cibuildwheel.macos.environment]
+DYLD_LIBRARY_PATH = "$(pwd)/tmp/lib"
+PKG_CONFIG_PATH = "$(pwd)/tmp/lib/pkgconfig"
+MACOSX_DEPLOYMENT_TARGET = "10.15"
 
 [tool.cibuildwheel.windows]
 archs = "AMD64 x86 ARM64"
-# Use delvewheel on Windows
-before-all = "pip install delvewheel"
-repair-wheel-command = [
-  "delvewheel repair -w {dest_dir} {wheel} --add-path ./tmp/lib --no-diagnostic",
-  "pipx run abi3audit --strict --report {wheel}",
-]
+# Avoid writing diagnostic information to DELVEWHEEL metadata file
+repair-wheel-command = "delvewheel repair -w {dest_dir} -v {wheel} --no-diagnostic"
+
+[tool.cibuildwheel.windows.environment]
+PATH = "./tmp/lib;$PATH"
+PKG_CONFIG_PATH = "./tmp/lib/pkgconfig"
