@@ -4,6 +4,11 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.18.4] - 2026-07-06
+### Note
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://github.com/libvips/libvips/releases/tag/v8.18.4
+
 ## [8.18.3] - 2026-06-09
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
@@ -90,6 +95,7 @@ https://github.com/libvips/libvips/releases/tag/v8.15.3
 ### Added
 - Initial release.
 
+[8.18.4]: https://github.com/kleisauke/pyvips-binary/compare/v8.18.3...v8.18.4
 [8.18.3]: https://github.com/kleisauke/pyvips-binary/compare/v8.18.2...v8.18.3
 [8.18.2]: https://github.com/kleisauke/pyvips-binary/compare/v8.18.1...v8.18.2
 [8.18.1]: https://github.com/kleisauke/pyvips-binary/compare/v8.18.0...v8.18.1
