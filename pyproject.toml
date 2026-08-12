@@ -75,7 +75,7 @@ environment-pass = ["RUNNER_OS"]
 archs = "x86_64 aarch64 armv7l"
 # manylinux_2_28 and musllinux_1_2 ships with patchelf 0.17.2
 # https://github.com/NixOS/patchelf/issues/474
-before-all = "pipx install --force patchelf==0.18.1.0a1"
+before-all = "pipx install --force patchelf==0.19.1.0"
 
 [tool.cibuildwheel.linux.environment]
 LD_LIBRARY_PATH = "$(pwd)/tmp/lib"
