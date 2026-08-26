@@ -27,7 +27,7 @@ includedir=\${prefix}/include
 
 Name: vips
 Description: Image processing library
-Version: 8.18.5
+Version: 8.18.6
 Requires:
 Libs: -L\${libdir} ${linkname}
 Cflags: -I\${includedir} -I\${includedir}/glib-2.0 -I\${libdir}/glib-2.0/include
