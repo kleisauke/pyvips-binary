@@ -63,10 +63,10 @@ exclude = [
 ]
 
 [tool.cibuildwheel]
-# Our wheels are ABI3, so building with CPython 3.13 is safe
-build = "cp313-*"
+# Our wheels are ABI3, so building with CPython 3.14 is safe
+build = "cp314-*"
 # https://github.com/lovell/sharp-libvips/issues/59
-skip = "cp313-musllinux_armv7l"
+skip = "cp314-musllinux_armv7l"
 before-build = "bash {package}/scripts/cibw_before_build.sh"
 test-command = "python -c \"import _libvips; assert _libvips.lib.vips_version(0) == 8\""
 environment-pass = ["RUNNER_OS"]
