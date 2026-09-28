@@ -39,14 +39,14 @@ ARCH_REMAP = {
 
 def get_plat():
     plat = sysconfig.get_platform()
-    plat_split = plat.split("-")
+    plat_split = plat.split('-')
     arch = plat_split[-1]
-    if arch == "win32":
-        plat = "win-32"
-    elif arch in ["universal2", "intel"]:
-        plat = f"macosx-{platform.uname().machine}"
+    if arch == 'win32':
+        plat = 'win-32'
+    elif arch in ['universal2', 'intel']:
+        plat = f'macosx-{platform.uname().machine}'
     elif len(plat_split) > 2:
-        plat = f"{plat_split[0]}-{arch}"
+        plat = f'{plat_split[0]}-{arch}'
     assert plat in SUPPORTED_PLATFORMS, f'invalid platform {plat}'
     return plat
 
@@ -60,25 +60,13 @@ def get_musllinux(arch):
 
 
 def get_linux(arch):
-    # best way of figuring out whether manylinux or musllinux is to look
-    # at the packaging tags. If packaging isn't installed (it's not by default)
-    # fallback to sysconfig (which may be flakier)
-    try:
-        from packaging.tags import sys_tags
-        tags = list(sys_tags())
-        plat = tags[0].platform
-    except ImportError:
-        # fallback to sysconfig for figuring out if you're using musl
-        plat = 'manylinux'
-        # value could be None
-        v = sysconfig.get_config_var('HOST_GNU_TYPE') or ''
-        if 'musl' in v:
-            plat = 'musllinux'
-
-    if 'manylinux' in plat:
+    libc, _ = platform.libc_ver()
+    if libc == 'glibc':
         return get_manylinux(arch)
-    elif 'musllinux' in plat:
+    elif libc == 'musl':
         return get_musllinux(arch)
+    else:
+        return None
 
 
 def get_macosx(arch):
@@ -90,15 +78,15 @@ def get_win32(arch):
 
 
 def download_vips(target, plat):
-    osname, arch = plat.split("-")
+    osname, arch = plat.split('-')
     headers = {'User-Agent':
                ('Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 ; '
                 '(KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3')}
     suffix = None
     typ = 'tar.gz'
-    if osname == "linux":
+    if osname == 'linux':
         suffix = get_linux(arch)
-    elif osname == "musllinux":
+    elif osname == 'musllinux':
         suffix = get_musllinux(arch)
     elif osname == 'macosx':
         suffix = get_macosx(arch)
@@ -123,17 +111,17 @@ def download_vips(target, plat):
     if response.status != 200:
         print(f'Could not download "{filename}"', file=sys.stderr)
         return None
-    # print(f"Downloading {length} from {filename}", file=sys.stderr)
+    # print(f'Downloading {length} from {filename}', file=sys.stderr)
     data = response.read()
-    # print("Saving to file", file=sys.stderr)
+    # print('Saving to file', file=sys.stderr)
     with open(target, 'wb') as fid:
         fid.write(data)
     return typ
 
 
 def setup_vips(plat=get_plat()):
-    '''
-    Download and setup a libvips library for building. If successful,
+    """
+    Download and set up a libvips library for building. If successful,
     the configuration script will find it automatically.
 
     Returns
@@ -141,7 +129,7 @@ def setup_vips(plat=get_plat()):
     msg : str
         path to extracted files on success, otherwise indicates what went wrong
         To determine success, do ``os.path.exists(msg)``
-    '''
+    """
 
     _, tmp = mkstemp()
     if not plat:
@@ -189,14 +177,14 @@ def extract_tarfile_to(tarfileobj, target_path, archive_path):
 
 
 def test_setup(plats):
-    '''
+    """
     Make sure all the downloadable files needed for wheel building
     exist and can be opened
-    '''
+    """
 
     errs = []
     for plat in plats:
-        osname, _ = plat.split("-")
+        osname, _ = plat.split('-')
         if plat not in plats:
             continue
         target = None
@@ -211,10 +199,10 @@ def test_setup(plats):
             if not target:
                 raise RuntimeError(f'Could not setup {plat}')
             print('success with', plat)
-            files = [glob.glob(os.path.join(target, "lib", e))
+            files = [glob.glob(os.path.join(target, 'lib', e))
                      for e in ['*.so', '*.dll', '*.dylib']]
             if not files:
-                raise RuntimeError("No files unpacked!")
+                raise RuntimeError('No files unpacked!')
         finally:
             if target:
                 if os.path.isfile(target):
